@@ -1,0 +1,9 @@
+**/__pycache__/
+**/*.pyc
+**/node_modules/
+frontend/dist/
+backend/tests/fixtures/
+.git/
+*.log
+.DS_Store
+.env

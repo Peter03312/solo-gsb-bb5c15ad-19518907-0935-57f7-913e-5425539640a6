@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Node
+node_modules/
+frontend/dist/
+
+# 测试夹具生成物
+backend/tests/fixtures/*.xml
+backend/tests/fixtures/*.mxl
+
+# 杂项
+*.log
+.DS_Store
+.env

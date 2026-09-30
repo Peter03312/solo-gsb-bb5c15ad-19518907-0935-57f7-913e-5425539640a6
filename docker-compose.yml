@@ -1,0 +1,24 @@
+# 一键启动：docker compose up --build
+# 访问地址：http://localhost:8000
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: transposed-parts:latest
+    container_name: transposed-parts
+    ports:
+      # 宿主机端口:容器端口；可用 TRANSPOSER_PORT 修改宿主机端口
+      - "${TRANSPOSER_PORT:-8000}:8000"
+    environment:
+      # 允许跨域来源（逗号分隔），单机使用保持 * 即可
+      CORS_ORIGINS: "${CORS_ORIGINS:-*}"
+      # 上传体积上限（字节），默认 20MB
+      MAX_UPLOAD_BYTES: "${MAX_UPLOAD_BYTES:-20971520}"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/health').status==200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
