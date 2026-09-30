@@ -1,0 +1,30 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: transpose-parts:latest
+    container_name: transpose-parts
+    ports:
+      - "${HOST_PORT:-8000}:8000"
+    environment:
+      # local on-disk storage directory for uploads and generated files
+      DATA_DIR: /data
+      # serve the built React bundle from this directory
+      STATIC_DIR: /app/frontend/dist
+      # 20 MB default upload cap
+      MAX_UPLOAD_BYTES: "20971520"
+      # origins allowed to call the API directly (container page itself is same-origin)
+      CORS_ORIGINS: "http://localhost:5173,http://localhost:8000,http://127.0.0.1:8000"
+    volumes:
+      - transpose-data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  transpose-data:
+    driver: local

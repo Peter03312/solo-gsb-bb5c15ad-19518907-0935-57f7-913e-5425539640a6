@@ -1,0 +1,19 @@
+# node / build artifacts
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# python
+backend/**/__pycache__/
+backend/.pytest_cache/
+**/*.pyc
+
+# local storage & data
+data/
+backend/data/
+
+# VCS / editor
+.git/
+.gitignore
+*.swp
+.DS_Store
